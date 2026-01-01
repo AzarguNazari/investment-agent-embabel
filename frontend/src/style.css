@@ -1,0 +1,46 @@
+:root {
+  --font-serif: 'Merriweather', serif;
+  --font-sans: 'Inter', sans-serif;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #fdfdfd;
+  --border-color: #e5e7eb;
+
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+
+  --accent-color: #10b981;
+  /* Emerald-500 similar to the green active tab/button */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Ant Design overrides for clean look */
+.ant-input,
+.ant-select-selector {
+  border-radius: 4px !important;
+  border-color: #e5e7eb !important;
+  box-shadow: none !important;
+}
+
+.ant-btn-primary {
+  background-color: var(--text-primary) !important;
+  border-color: var(--text-primary) !important;
+}
