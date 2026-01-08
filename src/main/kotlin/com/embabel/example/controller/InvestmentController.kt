@@ -1,8 +1,8 @@
-package com.embabel.example.investmentmanager.controller
+package com.embabel.example.controller
 
 import com.embabel.agent.api.invocation.AgentInvocation
 import com.embabel.agent.core.AgentPlatform
-import com.embabel.example.investmentmanager.model.InvestmentEnquiryRequest
+import com.embabel.example.model.InvestmentEnquiryRequest
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping

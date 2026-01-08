@@ -1,6 +1,11 @@
-package com.embabel.example.investmentmanager.repository
+package com.embabel.example.repository
 
-import com.embabel.example.investmentmanager.model.*
+import com.embabel.example.model.CustomerAccount
+import com.embabel.example.model.Document
+import com.embabel.example.model.JournalEntry
+import com.embabel.example.model.Portfolio
+import com.embabel.example.model.Position
+import com.embabel.example.model.Transaction
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 

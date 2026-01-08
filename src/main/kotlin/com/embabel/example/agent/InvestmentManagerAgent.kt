@@ -1,24 +1,24 @@
-package com.embabel.example.investmentmanager.agent
+package com.embabel.example.agent
 
 import com.embabel.agent.api.annotation.AchievesGoal
 import com.embabel.agent.api.annotation.Action
 import com.embabel.agent.api.annotation.Agent
 import com.embabel.agent.api.common.OperationContext
 import com.embabel.example.Offers
-import com.embabel.example.investmentmanager.model.CustomerAccount
-import com.embabel.example.investmentmanager.model.CustomerId
-import com.embabel.example.investmentmanager.model.DocumentList
-import com.embabel.example.investmentmanager.model.InvestmentEnquiryRequest
-import com.embabel.example.investmentmanager.model.InvestmentList
-import com.embabel.example.investmentmanager.model.JournalList
-import com.embabel.example.investmentmanager.model.OfferList
-import com.embabel.example.investmentmanager.model.TransactionList
-import com.embabel.example.investmentmanager.repository.CustomerAccountRepository
-import com.embabel.example.investmentmanager.repository.DocumentRepository
-import com.embabel.example.investmentmanager.repository.JournalRepository
-import com.embabel.example.investmentmanager.repository.PortfolioRepository
-import com.embabel.example.investmentmanager.repository.PositionRepository
-import com.embabel.example.investmentmanager.repository.TransactionRepository
+import com.embabel.example.model.CustomerAccount
+import com.embabel.example.model.CustomerId
+import com.embabel.example.model.DocumentList
+import com.embabel.example.model.InvestmentEnquiryRequest
+import com.embabel.example.model.InvestmentList
+import com.embabel.example.model.JournalList
+import com.embabel.example.model.OfferList
+import com.embabel.example.model.TransactionList
+import com.embabel.example.repository.CustomerAccountRepository
+import com.embabel.example.repository.DocumentRepository
+import com.embabel.example.repository.JournalRepository
+import com.embabel.example.repository.PortfolioRepository
+import com.embabel.example.repository.PositionRepository
+import com.embabel.example.repository.TransactionRepository
 import org.springframework.stereotype.Service
 
 @Agent(description = "Investment Manager Agent")

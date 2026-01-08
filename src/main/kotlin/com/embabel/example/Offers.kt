@@ -1,6 +1,6 @@
 package com.embabel.example
 
-import com.embabel.example.investmentmanager.model.Offer
+import com.embabel.example.model.Offer
 
 object Offers {
 

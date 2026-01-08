@@ -1,4 +1,4 @@
-package com.embabel.example.investmentmanager.model
+package com.embabel.example.model
 
 import jakarta.persistence.*
 

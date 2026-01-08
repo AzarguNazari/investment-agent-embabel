@@ -134,7 +134,6 @@ const renderMarkdown = (content: string) => {
                   <SendOutlined />
                 </button>
             </div>
-             <p class="disclaimer">AI responses may be inaccurate. Verify financial data independently.</p>
         </div>
       </main>
     </div>
