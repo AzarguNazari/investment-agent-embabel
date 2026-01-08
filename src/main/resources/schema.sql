@@ -4,8 +4,14 @@ CREATE TABLE accounts (
     type VARCHAR(50),
     owner_user_id VARCHAR(50),
     legal_name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    address VARCHAR(255),
     tax_identification_number VARCHAR(20),
     domicile VARCHAR(50),
+    bank_name VARCHAR(100),
+    iban VARCHAR(34),
+    bic VARCHAR(11),
     settled_cash DOUBLE,
     buying_power DOUBLE,
     margin_balance DOUBLE,
@@ -44,4 +50,33 @@ CREATE TABLE positions (
     unrealized_gain_loss DOUBLE,
     unrealized_gain_loss_pct DOUBLE,
     weight_in_portfolio DOUBLE
+);
+
+CREATE TABLE transactions (
+    transaction_id VARCHAR(50) PRIMARY KEY,
+    account_id VARCHAR(50),
+    date VARCHAR(20),
+    type VARCHAR(50),
+    amount DOUBLE,
+    description VARCHAR(255),
+    status VARCHAR(50)
+);
+
+CREATE TABLE journals (
+    journal_id VARCHAR(50) PRIMARY KEY,
+    account_id VARCHAR(50),
+    entry_date VARCHAR(20),
+    debit_account VARCHAR(100),
+    credit_account VARCHAR(100),
+    amount DOUBLE,
+    description VARCHAR(255)
+);
+
+CREATE TABLE documents (
+    document_id VARCHAR(50) PRIMARY KEY,
+    account_id VARCHAR(50),
+    type VARCHAR(50),
+    title VARCHAR(100),
+    issue_date VARCHAR(20),
+    url VARCHAR(255)
 );

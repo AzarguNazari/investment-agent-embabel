@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons-vue'
 import { chatService, type ChatMessage } from '../services/chatService'
 import { message as antMessage } from 'ant-design-vue'
+import { marked } from 'marked'
 
 const WELCOME_MESSAGE = 'Hello! I am your personal InvestmentAI assistant. How can I help you manage your portfolio today?'
 const ERROR_MESSAGE = 'Sorry, I encountered an error determining the best way to help you. Please try again.'
@@ -70,6 +71,10 @@ const handleSendMessage = async () => {
     isLoading.value = false
   }
 }
+
+const renderMarkdown = (content: string) => {
+  return marked.parse(content)
+}
 </script>
 
 <template>
@@ -95,8 +100,9 @@ const handleSendMessage = async () => {
 
             <div class="message-content">
                 <div class="sender-name">{{ message.role === 'user' ? 'You' : 'Assistant' }} <span class="time">{{ message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }}</span></div>
-                <!-- We use v-html for the rich content (tables, etc) returned by backend -->
-                <div class="bubble" v-html="message.content"></div>
+                <!-- We use v-html for the rich content (tables, and Markdown) -->
+                <div v-if="message.role === 'assistant'" class="bubble" v-html="renderMarkdown(message.content)"></div>
+                <div v-else class="bubble">{{ message.content }}</div>
             </div>
           </div>
 
@@ -234,10 +240,22 @@ const handleSendMessage = async () => {
 }
 
 .bubble {
-    font-family: var(--font-serif); /* Serif for reading text content */
+    font-family: var(--font-sans); /* Use sans for better readability? or keep serif if requested */
     line-height: 1.6;
     color: #1f2937;
     font-size: 0.95rem;
+    white-space: pre-wrap; /* Ensure new lines in plain text are preserved if any */
+}
+
+.assistant .bubble {
+    font-family: var(--font-serif);
+}
+
+.user .bubble {
+    background: #f9fafb;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    display: inline-block;
 }
 
 /* Loader */

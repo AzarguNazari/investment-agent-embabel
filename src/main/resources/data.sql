@@ -1,6 +1,6 @@
 -- Customer 1: Jane Doe
-INSERT INTO accounts (account_id, status, type, owner_user_id, legal_name, tax_identification_number, domicile, settled_cash, buying_power, margin_balance, currency, is_pattern_day_trader, kyc_status, suitability_level)
-VALUES ('ACC-7782XJ', 'Active', 'Individual_Brokerage', 'USR-441', 'Jane Doe', '***-**-1234', 'USA', 15420.50, 30841.00, 0.00, 'USD', false, 'Verified', 'Growth');
+INSERT INTO accounts (account_id, status, type, owner_user_id, legal_name, email, phone, address, tax_identification_number, domicile, bank_name, iban, bic, settled_cash, buying_power, margin_balance, currency, is_pattern_day_trader, kyc_status, suitability_level)
+VALUES ('ACC-7782XJ', 'Active', 'Individual_Brokerage', 'USR-441', 'Jane Doe', 'jane.doe@example.com', '+1-555-0101', '123 Wall St, New York, NY', '***-**-1234', 'USA', 'Global Bank Corp', 'US89 GBC 0000 1234 5678 90', 'GBCRUS33', 15420.50, 30841.00, 0.00, 'USD', false, 'Verified', 'Growth');
 
 INSERT INTO portfolios (portfolio_id, linked_account_id, display_name, inception_date, management_style, target_risk_score, primary_benchmark, rebalancing_frequency, total_market_value, total_unrealized_pnl, daily_change_pct)
 VALUES ('PORT-990', 'ACC-7782XJ', 'Retirement_Growth_2045', '2020-05-15', 'Discretionary', 8, 'S&P 500', 'Quarterly', 125000.75, 15200.30, 1.15);
@@ -10,8 +10,8 @@ VALUES ('POS-101-AAPL', 'PORT-990', 'AAPL', 'Equity', 'NASDAQ', 'US0378331005', 
 
 
 -- Customer 2: John Smith
-INSERT INTO accounts (account_id, status, type, owner_user_id, legal_name, tax_identification_number, domicile, settled_cash, buying_power, margin_balance, currency, is_pattern_day_trader, kyc_status, suitability_level)
-VALUES ('ACC-1001-A', 'Active', 'Joint_Tenant', 'USR-102', 'John Smith', '***-**-5678', 'USA', 5000.00, 10000.00, 0.00, 'USD', false, 'Verified', 'Balanced');
+INSERT INTO accounts (account_id, status, type, owner_user_id, legal_name, email, phone, address, tax_identification_number, domicile, bank_name, iban, bic, settled_cash, buying_power, margin_balance, currency, is_pattern_day_trader, kyc_status, suitability_level)
+VALUES ('ACC-1001-A', 'Active', 'Joint_Tenant', 'USR-102', 'John Smith', 'john.smith@gmail.com', '+1-555-0202', '456 Oak Ave, San Francisco, CA', '***-**-5678', 'USA', 'Pacific Union Bank', 'US77 PUB 1111 2222 3333 44', 'PUBUS66', 5000.00, 10000.00, 0.00, 'USD', false, 'Verified', 'Balanced');
 
 INSERT INTO portfolios (portfolio_id, linked_account_id, display_name, inception_date, management_style, target_risk_score, primary_benchmark, rebalancing_frequency, total_market_value, total_unrealized_pnl, daily_change_pct)
 VALUES ('PORT-2001', 'ACC-1001-A', 'Education_Fund', '2019-01-10', 'Robo_Advisor', 6, 'Total Stock Market', 'Annually', 45000.00, 5000.00, 0.50);
@@ -24,8 +24,8 @@ VALUES ('POS-202-GOOGL', 'PORT-2001', 'GOOGL', 'Equity', 'NASDAQ', 'US02079K3059
 
 
 -- Customer 3: Alice Johnson
-INSERT INTO accounts (account_id, status, type, owner_user_id, legal_name, tax_identification_number, domicile, settled_cash, buying_power, margin_balance, currency, is_pattern_day_trader, kyc_status, suitability_level)
-VALUES ('ACC-3001-B', 'Active', 'Individual_Brokerage', 'USR-303', 'Alice Johnson', '***-**-9012', 'UK', 20000.00, 20000.00, 0.00, 'GBP', false, 'Verified', 'Aggressive_Growth');
+INSERT INTO accounts (account_id, status, type, owner_user_id, legal_name, email, phone, address, tax_identification_number, domicile, bank_name, iban, bic, settled_cash, buying_power, margin_balance, currency, is_pattern_day_trader, kyc_status, suitability_level)
+VALUES ('ACC-3001-B', 'Active', 'Individual_Brokerage', 'USR-303', 'Alice Johnson', 'alice.j@outlook.co.uk', '+44 20 7946 0958', '10 Downing St, London', '***-**-9012', 'UK', 'Royal Bank', 'UK12 RYB 0000 5555 6666 77', 'RYBGB22', 20000.00, 20000.00, 0.00, 'GBP', false, 'Verified', 'Aggressive_Growth');
 
 INSERT INTO portfolios (portfolio_id, linked_account_id, display_name, inception_date, management_style, target_risk_score, primary_benchmark, rebalancing_frequency, total_market_value, total_unrealized_pnl, daily_change_pct)
 VALUES ('PORT-3001', 'ACC-3001-B', 'Tech_Heavy', '2021-06-01', 'Active_Management', 9, 'NASDAQ 100', 'Monthly', 80000.00, -2000.00, 2.5);
@@ -34,26 +34,20 @@ INSERT INTO positions (position_id, portfolio_id, ticker, instrument_type, excha
 VALUES ('POS-301-TSLA', 'PORT-3001', 'TSLA', 'Equity', 'NASDAQ', 'US88160R1014', 100, 250.00, 25000.00, 210.00, 21000.00, -4000.00, -16.0, 0.2625);
 
 
--- Customer 4: Bob Brown
-INSERT INTO accounts (account_id, status, type, owner_user_id, legal_name, tax_identification_number, domicile, settled_cash, buying_power, margin_balance, currency, is_pattern_day_trader, kyc_status, suitability_level)
-VALUES ('ACC-4001-C', 'Active', 'Margin', 'USR-404', 'Bob Brown', '***-**-3456', 'USA', 1000.00, 4000.00, 1500.00, 'USD', true, 'Verified', 'Speculative');
+-- Transactions Data
+INSERT INTO transactions (transaction_id, account_id, date, type, amount, description, status) VALUES
+('TX-001', 'ACC-7782XJ', '2023-12-01', 'DEPOSIT', 5000.0, 'Initial deposit via Wire', 'COMPLETED'),
+('TX-002', 'ACC-7782XJ', '2023-12-05', 'BUY', -2000.0, 'Bought 10 AAPL', 'COMPLETED'),
+('TX-003', 'ACC-1001-A', '2023-11-20', 'DIVIDEND', 45.50, 'Dividend MSFT', 'COMPLETED'),
+('TX-004', 'ACC-3001-B', '2023-12-10', 'WITHDRAWAL', -100.0, 'ATM Withdrawal', 'COMPLETED');
 
-INSERT INTO portfolios (portfolio_id, linked_account_id, display_name, inception_date, management_style, target_risk_score, primary_benchmark, rebalancing_frequency, total_market_value, total_unrealized_pnl, daily_change_pct)
-VALUES ('PORT-4001', 'ACC-4001-C', 'Day_Trading_Alpha', '2023-01-01', 'Self_Directed', 10, 'None', 'Daily', 25000.00, 1200.00, -0.5);
+-- Journals Data
+INSERT INTO journals (journal_id, account_id, entry_date, debit_account, credit_account, amount, description) VALUES
+('JRN-001', 'ACC-7782XJ', '2023-12-01', 'Cash at Bank', 'Customer Equity', 5000.0, 'Funding of account'),
+('JRN-002', 'ACC-7782XJ', '2023-12-05', 'Equities - Tech', 'Cash at Bank', 2000.0, 'Stock Purchase AAPL');
 
-INSERT INTO positions (position_id, portfolio_id, ticker, instrument_type, exchange, isin, quantity, average_buy_price, cost_basis, current_market_price, market_value, unrealized_gain_loss, unrealized_gain_loss_pct, weight_in_portfolio)
-VALUES ('POS-401-AMD', 'PORT-4001', 'AMD', 'Equity', 'NASDAQ', 'US0079031078', 200, 100.00, 20000.00, 115.00, 23000.00, 3000.00, 15.0, 0.92);
-
-
--- Customer 5: Charlie Davis
-INSERT INTO accounts (account_id, status, type, owner_user_id, legal_name, tax_identification_number, domicile, settled_cash, buying_power, margin_balance, currency, is_pattern_day_trader, kyc_status, suitability_level)
-VALUES ('ACC-5001-D', 'Inactive', 'IRA', 'USR-505', 'Charlie Davis', '***-**-7890', 'USA', 500.00, 500.00, 0.00, 'USD', false, 'Pending_Review', 'Conservative');
-
-INSERT INTO portfolios (portfolio_id, linked_account_id, display_name, inception_date, management_style, target_risk_score, primary_benchmark, rebalancing_frequency, total_market_value, total_unrealized_pnl, daily_change_pct)
-VALUES ('PORT-5001', 'ACC-5001-D', 'Safe_Harbor', '2015-11-20', 'Passive', 3, 'US Aggregate Bond', 'Annually', 10000.00, 200.00, 0.1);
-
-INSERT INTO positions (position_id, portfolio_id, ticker, instrument_type, exchange, isin, quantity, average_buy_price, cost_basis, current_market_price, market_value, unrealized_gain_loss, unrealized_gain_loss_pct, weight_in_portfolio)
-VALUES ('POS-501-NVDA', 'PORT-5001', 'NVDA', 'Equity', 'NASDAQ', 'US67066G1040', 2, 400.00, 800.00, 500.00, 1000.00, 200.00, 25.0, 0.1);
-
-INSERT INTO positions (position_id, portfolio_id, ticker, instrument_type, exchange, isin, quantity, average_buy_price, cost_basis, current_market_price, market_value, unrealized_gain_loss, unrealized_gain_loss_pct, weight_in_portfolio)
-VALUES ('POS-502-INTC', 'PORT-5001', 'INTC', 'Equity', 'NASDAQ', 'US4581401001', 50, 40.00, 2000.00, 35.00, 1750.00, -250.00, -12.5, 0.175);
+-- Documents Data
+INSERT INTO documents (document_id, account_id, type, title, issue_date, url) VALUES
+('DOC-001', 'ACC-7782XJ', 'STATEMENT', 'Monthly Statement - Nov 2023', '2023-12-01', 'https://example.com/docs/acc7782/stmt-nov-2023.pdf'),
+('DOC-002', 'ACC-7782XJ', 'TAX', 'Form 1099-DIV 2023', '2024-01-15', 'https://example.com/docs/acc7782/tax-2023.pdf'),
+('DOC-003', 'ACC-1001-A', 'ADVISORY', 'Quarterly Review Report', '2023-10-05', 'https://example.com/docs/acc1001/q3-review.pdf');
