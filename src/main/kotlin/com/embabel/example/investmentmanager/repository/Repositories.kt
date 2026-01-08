@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CustomerAccountRepository : CrudRepository<CustomerAccount, String> {
-    fun findByOwnerUserId(userId: String): CustomerAccount?
 }
 
 @Repository

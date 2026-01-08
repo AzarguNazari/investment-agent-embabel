@@ -5,17 +5,11 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "portfolios")
 data class Portfolio(
-    @Id
-    @Column(name = "portfolio_id")
-    val portfolioId: String,
-    @Column(name = "linked_account_id")
-    val linkedAccountId: String,
-    @Embedded
-    val metadata: PortfolioMetadata,
-    @Embedded
-    val strategy: PortfolioStrategy,
-    @Embedded
-    val valuation: PortfolioValuation
+    @Id @Column(name = "portfolio_id") val portfolioId: String,
+    @Column(name = "linked_account_id") val linkedAccountId: String,
+    @Embedded val metadata: PortfolioMetadata,
+    @Embedded val strategy: PortfolioStrategy,
+    @Embedded val valuation: PortfolioValuation
 ) {
     protected constructor() : this("", "", PortfolioMetadata(), PortfolioStrategy(), PortfolioValuation())
 }

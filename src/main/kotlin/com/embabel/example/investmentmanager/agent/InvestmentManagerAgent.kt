@@ -1,60 +1,38 @@
-package com.embabel.example.investmentmanager
+package com.embabel.example.investmentmanager.agent
 
 import com.embabel.agent.api.annotation.AchievesGoal
 import com.embabel.agent.api.annotation.Action
 import com.embabel.agent.api.annotation.Agent
 import com.embabel.agent.api.common.OperationContext
-import com.embabel.example.investmentmanager.dto.*
-import com.embabel.example.investmentmanager.model.*
-import com.embabel.example.investmentmanager.repository.*
-import org.slf4j.LoggerFactory
+import com.embabel.example.Offers
+import com.embabel.example.investmentmanager.model.CustomerAccount
+import com.embabel.example.investmentmanager.model.CustomerId
+import com.embabel.example.investmentmanager.model.DocumentList
+import com.embabel.example.investmentmanager.model.InvestmentEnquiryRequest
+import com.embabel.example.investmentmanager.model.InvestmentList
+import com.embabel.example.investmentmanager.model.JournalList
+import com.embabel.example.investmentmanager.model.OfferList
+import com.embabel.example.investmentmanager.model.TransactionList
+import com.embabel.example.investmentmanager.repository.CustomerAccountRepository
+import com.embabel.example.investmentmanager.repository.DocumentRepository
+import com.embabel.example.investmentmanager.repository.JournalRepository
+import com.embabel.example.investmentmanager.repository.PortfolioRepository
+import com.embabel.example.investmentmanager.repository.PositionRepository
+import com.embabel.example.investmentmanager.repository.TransactionRepository
 import org.springframework.stereotype.Service
 
 @Agent(description = "Investment Manager Agent")
 @Service
 class InvestmentManagerAgent(
-        private val accountRepository: CustomerAccountRepository,
-        private val portfolioRepository: PortfolioRepository,
-        private val positionRepository: PositionRepository,
-        private val transactionRepository: TransactionRepository,
-        private val journalRepository: JournalRepository,
-        private val documentRepository: DocumentRepository
+    private val accountRepository: CustomerAccountRepository,
+    private val portfolioRepository: PortfolioRepository,
+    private val positionRepository: PositionRepository,
+    private val transactionRepository: TransactionRepository,
+    private val journalRepository: JournalRepository,
+    private val documentRepository: DocumentRepository
 ) {
-        private val logger = LoggerFactory.getLogger(InvestmentManagerAgent::class.java)
-
-        private val dummyOffers =
-                listOf(
-                        Offer(
-                                "off1",
-                                "Personalized Strategy",
-                                "Get a free 1-on-1 advisor session",
-                                "Free Session"
-                        ),
-                        Offer(
-                                "off2",
-                                "Tax-Loss Harvesting",
-                                "Let AI optimize your tax liability",
-                                "Save up to $2k"
-                        ),
-                        Offer(
-                                "off3",
-                                "Venture Access",
-                                "Early access to Series B startup funding",
-                                "Exclusive"
-                        ),
-                        Offer(
-                                "off4",
-                                "High-Yield Savings",
-                                "Upgrade to Platinum for 5.5% APY",
-                                "Interest Bonus"
-                        )
-                )
-
         @Action
-        fun getCustomerId(
-                request: InvestmentEnquiryRequest,
-                context: OperationContext
-        ): CustomerId {
+        fun getCustomerId(request: InvestmentEnquiryRequest, context: OperationContext): CustomerId {
                 return context.ai()
                         .withAutoLlm()
                         .createObject(
@@ -71,9 +49,7 @@ class InvestmentManagerAgent(
         @Action
         fun getAccountInfo(customerId: CustomerId, context: OperationContext): CustomerAccount {
                 if (customerId.id.isEmpty()) {
-                        throw IllegalArgumentException(
-                                "Customer ID is required but was not provided."
-                        )
+                        throw IllegalArgumentException("Customer ID is required but was not provided.")
                 }
                 return accountRepository.findById(customerId.id).orElseThrow {
                         IllegalArgumentException("Account not found for ID: ${customerId.id}")
@@ -86,8 +62,7 @@ class InvestmentManagerAgent(
                         return InvestmentList(emptyList())
                 }
                 val portfolios = portfolioRepository.findByLinkedAccountId(customerId.id)
-                val positions =
-                        portfolios.flatMap { positionRepository.findByPortfolioId(it.portfolioId) }
+                val positions = portfolios.flatMap { positionRepository.findByPortfolioId(it.portfolioId) }
                 return InvestmentList(positions)
         }
 
@@ -121,22 +96,18 @@ class InvestmentManagerAgent(
                         "Answers any questions about the account, including holdings, transactions, journals, documents, or personal info like email and bank details."
         )
         fun explainInvestment(
-                request: InvestmentEnquiryRequest,
-                account: CustomerAccount,
-                investments: InvestmentList,
-                transactions: TransactionList,
-                journals: JournalList,
-                documents: DocumentList,
-                context: OperationContext
+            request: InvestmentEnquiryRequest,
+            account: CustomerAccount,
+            investments: InvestmentList,
+            transactions: TransactionList,
+            journals: JournalList,
+            documents: DocumentList,
+            context: OperationContext
         ): String {
                 val investmentSummary =
                         investments.investments.joinToString("\n") {
                                 "${it.assetDetails.ticker} (${it.assetDetails.instrumentType}): Qty: ${it.holdingData.quantity}, MarketVal: ${it.holdingData.marketValue}, P/L: ${it.performance.unrealizedGainLoss}"
                         }
-
-                logger.info(
-                        "Retrieved ${transactions.transactions.size} transactions, ${journals.journals.size} journals, ${documents.documents.size} documents for account ${account.accountId}"
-                )
 
                 val txSummary =
                         transactions.transactions.take(5).joinToString("\n") {
@@ -173,7 +144,7 @@ class InvestmentManagerAgent(
 
         @Action
         fun getRelevantOffers(account: CustomerAccount, context: OperationContext): OfferList {
-                return OfferList(dummyOffers.take(2))
+                return OfferList(Offers.dummyOffers.take(2))
         }
 
         @Action
@@ -182,13 +153,13 @@ class InvestmentManagerAgent(
                         "Generates a full account summary including balance, holdings, transactions, and offers. Use this for 'report', 'account status', 'full info' or 'portfolio summary'."
         )
         fun generateFullReport(
-                account: CustomerAccount,
-                investments: InvestmentList,
-                transactions: TransactionList,
-                journals: JournalList,
-                documents: DocumentList,
-                offers: OfferList,
-                context: OperationContext
+            account: CustomerAccount,
+            investments: InvestmentList,
+            transactions: TransactionList,
+            journals: JournalList,
+            documents: DocumentList,
+            offers: OfferList,
+            context: OperationContext
         ): String {
                 val totalValuation = investments.investments.sumOf { it.holdingData.marketValue }
                 val txSummary =
