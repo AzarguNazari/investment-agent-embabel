@@ -3,14 +3,13 @@ import { ref, nextTick, watch } from 'vue'
 import { 
   SendOutlined, 
   UserOutlined, 
-  RobotOutlined, 
   LoadingOutlined
 } from '@ant-design/icons-vue'
 import { chatService, type ChatMessage } from '../services/chatService'
 import { message as antMessage } from 'ant-design-vue'
 import { marked } from 'marked'
 
-const WELCOME_MESSAGE = 'Hello! I am your personal InvestmentAI assistant. How can I help you manage your portfolio today?'
+const WELCOME_MESSAGE = 'Welcome to your Private Investment Suite. I am your Lead Investment Advisor. How may I assist you with your portfolio or market analysis today?'
 const ERROR_MESSAGE = 'Sorry, I encountered an error determining the best way to help you. Please try again.'
 
 const messages = ref<ChatMessage[]>([
@@ -82,7 +81,13 @@ const renderMarkdown = (content: string) => {
     <!-- Header -->
     <header class="header">
       <div class="header-content">
-        <h1>Investment Manager</h1>
+        <div class="brand">
+          <span class="brand-accent"></span>
+          <h1>Private Wealth Management</h1>
+        </div>
+        <div class="status-indicator">
+          <span class="status-dot"></span> Secure Portal
+        </div>
       </div>
     </header>
 
@@ -93,16 +98,21 @@ const renderMarkdown = (content: string) => {
           <div v-for="message in messages" :key="message.id" 
                class="message-row" :class="message.role">
             
-            <div class="avatar">
-               <UserOutlined v-if="message.role === 'user'" />
-               <RobotOutlined v-else />
+            <div class="avatar" v-if="message.role === 'user'">
+               <UserOutlined />
             </div>
 
             <div class="message-content">
                 <div class="sender-name">{{ message.role === 'user' ? 'You' : 'Assistant' }} <span class="time">{{ message.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }}</span></div>
                 <!-- We use v-html for the rich content (tables, and Markdown) -->
-                <div v-if="message.role === 'assistant'" class="bubble" v-html="renderMarkdown(message.content)"></div>
-                <div v-else class="bubble">{{ message.content }}</div>
+                <div v-if="message.role === 'assistant'" class="email-wrapper">
+                    <div class="email-header">
+                        <span class="email-label">From:</span> Private Investment Advisor
+                        <div class="email-separator"></div>
+                    </div>
+                    <div class="email-body" v-html="renderMarkdown(message.content)"></div>
+                </div>
+                <div v-else class="bubble user-bubble">{{ message.content }}</div>
             </div>
           </div>
 
@@ -151,15 +161,67 @@ const renderMarkdown = (content: string) => {
 
 /* Header */
 .header {
-  padding: 1.5rem 2rem;
+  padding: 1rem 3rem;
   border-bottom: 1px solid #f3f4f6;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.header-content {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-accent {
+  width: 4px;
+  height: 24px;
+  background: #4f46e5;
+  border-radius: 2px;
 }
 
 .header h1 {
   font-family: var(--font-serif);
-  font-size: 2rem;
+  font-size: 1.25rem;
+  font-weight: 700;
   margin-bottom: 0;
-  color: #1f2937;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #10b981;
+  background: #ecfdf5;
+  padding: 0.4rem 0.75rem;
+  border-radius: 20px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
 }
 
 /* Main Body */
@@ -238,23 +300,48 @@ const renderMarkdown = (content: string) => {
     font-size: 0.7rem;
 }
 
-.bubble {
-    font-family: var(--font-sans); /* Use sans for better readability? or keep serif if requested */
-    line-height: 1.6;
-    color: #1f2937;
-    font-size: 0.95rem;
-    white-space: pre-wrap; /* Ensure new lines in plain text are preserved if any */
+.email-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 2px;
+    max-width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.assistant .bubble {
+.email-header {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 0.75rem;
+}
+
+.email-label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.email-separator {
+    margin-top: 0.5rem;
+}
+
+.email-body {
     font-family: var(--font-serif);
+    line-height: 1.7;
+    color: #1f2937;
+    font-size: 1rem;
 }
 
-.user .bubble {
+.user-bubble {
     background: #f9fafb;
     padding: 0.75rem 1rem;
-    border-radius: 12px;
+    border-radius: 8px;
     display: inline-block;
+    border: 1px solid #e5e7eb;
 }
 
 /* Loader */

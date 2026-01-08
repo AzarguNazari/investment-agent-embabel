@@ -1,6 +1,6 @@
 -- Customer 1: Jane Doe
 INSERT INTO accounts (account_id, status, type, owner_user_id, legal_name, email, phone, address, tax_identification_number, domicile, bank_name, iban, bic, settled_cash, buying_power, margin_balance, currency, is_pattern_day_trader, kyc_status, suitability_level)
-VALUES ('ACC-7782XJ', 'Active', 'Individual_Brokerage', 'USR-441', 'Jane Doe', 'jane.doe@example.com', '+1-555-0101', '123 Wall St, New York, NY', '***-**-1234', 'USA', 'Global Bank Corp', 'US89 GBC 0000 1234 5678 90', 'GBCRUS33', 15420.50, 30841.00, 0.00, 'USD', false, 'Verified', 'Growth');
+VALUES ('ACC-7782XJ', 'Active', 'Individual_Brokerage', 'USR-441', 'Hazar Gul Nazari', 'hazar.nazari@check24.de', '+1-555-0101', '123 Wall St, New York, NY', '***-**-1234', 'USA', 'Global Bank Corp', 'US89 GBC 0000 1234 5678 90', 'GBCRUS33', 15420.50, 30841.00, 0.00, 'USD', false, 'Verified', 'Growth');
 
 INSERT INTO portfolios (portfolio_id, linked_account_id, display_name, inception_date, management_style, target_risk_score, primary_benchmark, rebalancing_frequency, total_market_value, total_unrealized_pnl, daily_change_pct)
 VALUES ('PORT-990', 'ACC-7782XJ', 'Retirement_Growth_2045', '2020-05-15', 'Discretionary', 8, 'S&P 500', 'Quarterly', 125000.75, 15200.30, 1.15);
